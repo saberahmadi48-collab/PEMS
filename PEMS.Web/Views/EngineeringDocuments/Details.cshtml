@@ -1,0 +1,46 @@
+﻿@model PEMS.Application.DTOs.EngineeringDocumentDto
+
+@{
+    ViewData["Title"] = "Document Details";
+}
+
+<h2>Document Details</h2>
+
+
+<div>
+
+    <p>
+        <strong>Document No:</strong>
+        @Model.DocumentNo
+    </p>
+
+
+    <p>
+        <strong>Title:</strong>
+        @Model.Title
+    </p>
+
+
+    <p>
+        <strong>Type:</strong>
+        @Model.DocumentType
+    </p>
+
+
+    <p>
+        <strong>Description:</strong>
+        @Model.Description
+    </p>
+
+
+    <p>
+        <strong>Created:</strong>
+        @Model.CreatedDate
+    </p>
+
+</div>
+
+
+<a asp-action="Index">
+    Back
+</a>

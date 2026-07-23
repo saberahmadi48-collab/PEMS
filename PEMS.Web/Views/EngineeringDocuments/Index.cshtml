@@ -1,0 +1,53 @@
+﻿@model List<PEMS.Application.DTOs.EngineeringDocumentDto>
+
+@{
+    ViewData["Title"] = "Engineering Documents";
+}
+
+<h2>Engineering Documents</h2>
+
+<table class="table table-bordered">
+
+    <thead>
+        <tr>
+            <th>Document No</th>
+            <th>Title</th>
+            <th>Type</th>
+            <th>Created Date</th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.DocumentNo
+                </td>
+
+                <td>
+                    @item.Title
+                </td>
+
+                <td>
+                    @item.DocumentType
+                </td>
+
+                <td>
+                    @item.CreatedDate.ToShortDateString()
+                </td>
+
+                <td>
+                    <a asp-action="Details"
+                       asp-route-id="@item.DocumentId">
+                        Details
+                    </a>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+
+</table>

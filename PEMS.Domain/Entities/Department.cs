@@ -1,0 +1,16 @@
+﻿namespace PEMS.Domain.Entities;
+
+public class Department
+{
+    public int DepartmentId { get; set; }
+
+    public string Code { get; set; } = string.Empty;
+
+    public string Name { get; set; } = string.Empty;
+
+    public string? Description { get; set; }
+
+    public bool IsActive { get; set; } = true;
+
+    public DateTime CreatedDate { get; set; } = DateTime.Now;
+}
