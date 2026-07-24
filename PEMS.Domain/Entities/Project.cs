@@ -29,4 +29,7 @@ public class Project
     public bool IsActive { get; set; } = true;
 
     public DateTime CreatedDate { get; set; } = DateTime.Now;
+
+    public ICollection<EngineeringDocument> EngineeringDocuments { get; set; }
+= new List<EngineeringDocument>();
 }

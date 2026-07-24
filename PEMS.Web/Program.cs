@@ -21,7 +21,11 @@ builder.Services.AddControllersWithViews();
 // Database
 builder.Services.AddDbContext<PEMSDbContext>(options =>
     options.UseSqlServer(
-        builder.Configuration.GetConnectionString("PEMSConnection")
+        builder.Configuration.GetConnectionString("PEMSConnection"),
+        sqlOptions =>
+        {
+            sqlOptions.EnableRetryOnFailure();
+        }
     ));
 
 
@@ -32,14 +36,18 @@ builder.Services.AddScoped<IEngineeringDocumentService, EngineeringDocumentServi
 // Persistence Repositories
 builder.Services.AddScoped<IEngineeringDocumentRepository, EngineeringDocumentRepository>();
 
+
+// AI Services
 builder.Services.AddScoped<IDocumentAIService, DocumentAIService>();
 
 builder.Services.AddScoped<IDocumentSearchAIService, DocumentSearchAIService>();
+
 
 builder.Services.AddHttpClient<IOllamaService, OllamaService>(client =>
 {
     client.BaseAddress = new Uri("http://localhost:11434/");
 });
+
 
 var app = builder.Build();
 
