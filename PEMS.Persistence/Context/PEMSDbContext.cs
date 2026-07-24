@@ -112,7 +112,11 @@ public class PEMSDbContext : DbContext
        .HasForeignKey(x => x.DocumentId)
        .OnDelete(DeleteBehavior.Restrict);
 
-        // EngineeringDocument - Project
+
+        // ==============================
+        // Engineering Documents
+        // ==============================
+
         modelBuilder.Entity<EngineeringDocument>()
             .HasOne(x => x.Project)
             .WithMany(x => x.EngineeringDocuments)
@@ -120,8 +124,6 @@ public class PEMSDbContext : DbContext
             .OnDelete(DeleteBehavior.Restrict);
 
 
-
-        // EngineeringDocument - Discipline
         modelBuilder.Entity<EngineeringDocument>()
             .HasOne(x => x.Discipline)
             .WithMany(x => x.EngineeringDocuments)
@@ -129,8 +131,6 @@ public class PEMSDbContext : DbContext
             .OnDelete(DeleteBehavior.Restrict);
 
 
-
-        // EngineeringDocument - Attachment
         modelBuilder.Entity<DocumentAttachment>()
             .HasOne(x => x.Document)
             .WithMany(x => x.Attachments)
