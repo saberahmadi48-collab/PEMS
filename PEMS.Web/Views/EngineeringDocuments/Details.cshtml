@@ -1,46 +1,60 @@
-﻿@model PEMS.Application.DTOs.EngineeringDocumentDto
+﻿<hr />
 
-@{
-    ViewData["Title"] = "Document Details";
+<h3>Attachments</h3>
+
+
+@if(Model.Attachments != null && Model.Attachments.Any())
+{
+    <table class="table table-bordered">
+
+        <tr>
+            <th>File Name</th>
+            <th>Type</th>
+            <th>Upload Date</th>
+            <th>AI Status</th>
+            <th>Action</th>
+        </tr>
+
+
+        @foreach(var file in Model.Attachments)
+        {
+            <tr>
+
+                <td>
+                    @file.FileName
+                </td>
+
+
+                <td>
+                    @file.FileExtension
+                </td>
+
+
+                <td>
+                    @file.UploadDate
+                </td>
+
+
+                <td>
+                    @file.AIStatus
+                </td>
+
+
+                <td>
+                    <a href="@file.FilePath"
+                       class="btn btn-sm btn-primary">
+                        Open
+                    </a>
+                </td>
+
+            </tr>
+        }
+
+    </table>
 }
-
-<h2>Document Details</h2>
-
-
-<div>
-
+else
+{
     <p>
-        <strong>Document No:</strong>
-        @Model.DocumentNo
+        No attachment available
     </p>
-
-
-    <p>
-        <strong>Title:</strong>
-        @Model.Title
-    </p>
-
-
-    <p>
-        <strong>Type:</strong>
-        @Model.DocumentType
-    </p>
-
-
-    <p>
-        <strong>Description:</strong>
-        @Model.Description
-    </p>
-
-
-    <p>
-        <strong>Created:</strong>
-        @Model.CreatedDate
-    </p>
-
-</div>
-
-
-<a asp-action="Index">
-    Back
-</a>
+}

@@ -2,6 +2,7 @@
 
 public class EngineeringDocumentDto
 {
+    
     public int DocumentId { get; set; }
 
     public string DocumentNo { get; set; } = "";
@@ -25,4 +26,7 @@ public class EngineeringDocumentDto
     public string? Description { get; set; }
 
     public DateTime CreatedDate { get; set; }
+
+    public List<DocumentAttachmentDto> Attachments { get; set; }
+     = new();
 }

@@ -12,8 +12,8 @@ public class Discipline
 
     public bool IsActive { get; set; } = true;
 
-    public DateTime CreatedDate { get; set; } = DateTime.Now;
+    public DateTime CreatedDate { get; set; }
 
     public ICollection<EngineeringDocument> EngineeringDocuments { get; set; }
-    = new List<EngineeringDocument>();
+        = new List<EngineeringDocument>();
 }
