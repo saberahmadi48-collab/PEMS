@@ -2,20 +2,31 @@
 
 public class DocumentAttachmentDto
 {
+
     public int AttachmentId { get; set; }
 
+    public string FileName { get; set; }
 
-    public string FileName { get; set; } = "";
+    public string FileExtension { get; set; }
 
-
-    public string FileExtension { get; set; } = "";
-
-
-    public string FilePath { get; set; } = "";
-
+    public string FilePath { get; set; }
 
     public long FileSize { get; set; }
 
+    public string? MimeType { get; set; }
+
+
+    public string? AIStatus { get; set; }
+
+    public string? AISummary { get; set; }
+
+    public string? AIKeywords { get; set; }
+
+
+    public DateTime UploadDate { get; set; }
+
+
+    public bool IsActive { get; set; }
 
 
     public string FileSizeText
@@ -23,34 +34,13 @@ public class DocumentAttachmentDto
         get
         {
             if (FileSize < 1024)
-                return $"{FileSize} Byte";
-
+                return $"{FileSize} B";
 
             if (FileSize < 1024 * 1024)
-                return $"{FileSize / 1024:N2} KB";
+                return $"{FileSize / 1024} KB";
 
-
-            return $"{FileSize / (1024 * 1024):N2} MB";
+            return $"{FileSize / (1024 * 1024)} MB";
         }
     }
 
-
-
-    public string? MimeType { get; set; }
-
-
-
-    public string AIStatus { get; set; } = "";
-
-
-
-    public string? AISummary { get; set; }
-
-
-
-    public string? AIKeywords { get; set; }
-
-
-
-    public DateTime UploadDate { get; set; }
 }

@@ -203,28 +203,30 @@ public class EngineeringDocumentService : IEngineeringDocumentService
 
             Workflows = document.Workflows
 
-                .Where(x => x.IsActive)
+    .Where(x => x.IsActive)
 
-                .Select(x => new DocumentWorkflowDto
-                {
-                    WorkflowId = x.WorkflowId,
+    .Select(x => new DocumentWorkflowDto
+    {
+        WorkflowId = x.WorkflowId,
 
-                    FromStatus = x.FromStatus,
+        FromStatus = x.FromStatus,
 
-                    ToStatus = x.ToStatus,
+        ToStatus = x.ToStatus,
 
-                    Comment = x.Comment,
+        ActionType = x.ActionType,
 
-                    ActionDate = x.ActionDate,
+        Comment = x.Comment,
+
+        ActionDate = x.ActionDate,
 
 
-                    ActionBy = x.ActionBy != null
-                        ? x.ActionBy.FirstName + " " + x.ActionBy.LastName
-                        : ""
+        ActionBy = x.ActionBy != null
+            ? x.ActionBy.FirstName + " " + x.ActionBy.LastName
+            : ""
 
-                })
+    })
 
-                .ToList()
+    .ToList()
 
         };
     }

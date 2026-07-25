@@ -2,13 +2,17 @@
 
 public class DocumentWorkflowDto
 {
+
     public int WorkflowId { get; set; }
 
 
-    public string FromStatus { get; set; } = string.Empty;
+    public string? FromStatus { get; set; }
 
 
-    public string ToStatus { get; set; } = string.Empty;
+    public string? ToStatus { get; set; }
+
+
+    public string? ActionType { get; set; }
 
 
     public string? Comment { get; set; }
@@ -17,5 +21,6 @@ public class DocumentWorkflowDto
     public DateTime ActionDate { get; set; }
 
 
-    public string ActionBy { get; set; } = "";
+    public string? ActionBy { get; set; }
+
 }
