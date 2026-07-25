@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PEMS.Persistence.Context;
 
@@ -11,9 +12,11 @@ using PEMS.Persistence.Context;
 namespace PEMS.Persistence.Migrations
 {
     [DbContext(typeof(PEMSDbContext))]
-    partial class PEMSDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260724222119_AddRevisionManagementFields")]
+    partial class AddRevisionManagementFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -540,10 +543,6 @@ namespace PEMS.Persistence.Migrations
                     b.Property<DateTime>("ActionDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("ActionType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Comment")
                         .HasColumnType("nvarchar(max)");
 
@@ -696,12 +695,6 @@ namespace PEMS.Persistence.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("DeletedById")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
@@ -715,9 +708,6 @@ namespace PEMS.Persistence.Migrations
                     b.Property<string>("DocumentType")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
 
                     b.Property<string>("IssuePurpose")
                         .HasColumnType("nvarchar(max)");
@@ -744,8 +734,6 @@ namespace PEMS.Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("DocumentId");
-
-                    b.HasIndex("DeletedById");
 
                     b.HasIndex("DisciplineId");
 
@@ -2219,10 +2207,6 @@ namespace PEMS.Persistence.Migrations
 
             modelBuilder.Entity("PEMS.Domain.Entities.EngineeringDocument", b =>
                 {
-                    b.HasOne("PEMS.Domain.Entities.Employee", "DeletedBy")
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
                     b.HasOne("PEMS.Domain.Entities.Discipline", "Discipline")
                         .WithMany("EngineeringDocuments")
                         .HasForeignKey("DisciplineId")
@@ -2234,8 +2218,6 @@ namespace PEMS.Persistence.Migrations
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("DeletedBy");
 
                     b.Navigation("Discipline");
 

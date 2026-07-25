@@ -1,51 +1,499 @@
-﻿<hr />
+﻿@model PEMS.Application.DTOs.EngineeringDocumentDto
 
-<h3>Attachments</h3>
+<div class="mb-3">
+
+    <form asp-action="Submit"
+          method="post"
+          style="display:inline">
+
+        <input type="hidden"
+               name="id"
+               value="@Model.DocumentId" />
+
+        <button class="btn btn-warning">
+            Submit For Review
+        </button>
+
+    </form>
+
+
+
+    <form asp-action="Approve"
+          method="post"
+          style="display:inline">
+
+        <input type="hidden"
+               name="id"
+               value="@Model.DocumentId" />
+
+        <button class="btn btn-success">
+            Approve
+        </button>
+
+    </form>
+
+
+
+    <form asp-action="Reject"
+          method="post"
+          style="display:inline">
+
+        <input type="hidden"
+               name="id"
+               value="@Model.DocumentId" />
+
+        <button class="btn btn-danger">
+            Reject
+        </button>
+
+    </form>
+
+</div>
+
+<h2>Engineering Document Details</h2>
+
+
+<hr />
+
+<h3>Basic Information</h3>
+
+<table class="table table-bordered">
+
+    <tr>
+        <th>Document No</th>
+        <td>@Model.DocumentNo</td>
+    </tr>
+
+
+    <tr>
+        <th>Title</th>
+        <td>@Model.Title</td>
+    </tr>
+
+
+    <tr>
+        <th>Description</th>
+        <td>@Model.Description</td>
+    </tr>
+
+
+    <tr>
+        <th>Document Type</th>
+        <td>@Model.DocumentType</td>
+    </tr>
+
+
+    <tr>
+        <th>Discipline</th>
+        <td>@Model.DisciplineName</td>
+    </tr>
+
+
+    <tr>
+        <th>Project</th>
+        <td>@Model.ProjectName</td>
+    </tr>
+
+
+    <tr>
+        <th>Status</th>
+        <td>@Model.Status</td>
+    </tr>
+
+
+    <tr>
+        <th>Revision</th>
+        <td>@Model.RevisionNo</td>
+    </tr>
+
+
+    <tr>
+        <th>Created Date</th>
+        <td>@Model.CreatedDate</td>
+    </tr>
+
+</table>
+
+
+
+<hr />
+
+<h3>Engineering Information</h3>
+
+
+<table class="table table-bordered">
+
+    <tr>
+        <th>Issue Purpose</th>
+        <td>@Model.IssuePurpose</td>
+    </tr>
+
+
+    <tr>
+        <th>Prepared By</th>
+        <td>@Model.PreparedBy</td>
+    </tr>
+
+
+    <tr>
+        <th>Checked By</th>
+        <td>@Model.CheckedBy</td>
+    </tr>
+
+
+    <tr>
+        <th>Approved By</th>
+        <td>@Model.ApprovedBy</td>
+    </tr>
+
+</table>
+
+
+<hr />
+
+<h3>
+    Workflow Actions
+</h3>
+
+
+<div class="mb-3">
+
+
+    @if(Model.Status == "Draft")
+    {
+        <form asp-action="Submit"
+              method="post"
+              style="display:inline">
+
+            <input type="hidden"
+                   name="id"
+                   value="@Model.DocumentId" />
+
+
+            <button type="submit"
+                    class="btn btn-primary">
+
+                Submit For Review
+
+            </button>
+
+        </form>
+    }
+
+
+
+    else if(Model.Status == "Submitted" ||
+            Model.Status == "Review")
+    {
+
+
+        <form asp-action="Approve"
+              method="post"
+              style="display:inline">
+
+
+            <input type="hidden"
+                   name="id"
+                   value="@Model.DocumentId" />
+
+
+            <button type="submit"
+                    class="btn btn-success">
+
+                Approve
+
+            </button>
+
+        </form>
+
+
+
+
+
+        <form asp-action="Reject"
+              method="post"
+              style="display:inline">
+
+
+            <input type="hidden"
+                   name="id"
+                   value="@Model.DocumentId" />
+
+
+            <button type="submit"
+                    class="btn btn-danger">
+
+                Reject
+
+            </button>
+
+
+        </form>
+
+    }
+
+
+
+
+    else if(Model.Status == "Approved")
+    {
+
+        <form asp-action="CreateRevision"
+              method="post">
+
+
+            <input type="hidden"
+                   name="id"
+                   value="@Model.DocumentId" />
+
+
+
+            <button type="submit"
+                    class="btn btn-warning">
+
+                Create New Revision
+
+            </button>
+
+
+        </form>
+
+    }
+
+
+
+
+
+    else if(Model.Status == "Rejected")
+    {
+
+        <form asp-action="Submit"
+              method="post">
+
+
+            <input type="hidden"
+                   name="id"
+                   value="@Model.DocumentId" />
+
+
+
+            <button type="submit"
+                    class="btn btn-primary">
+
+                Resubmit
+
+            </button>
+
+
+        </form>
+
+    }
+
+
+    else
+    {
+
+        <span class="text-muted">
+            No action available
+        </span>
+
+    }
+
+
+</div>
+
+
+<hr />
+
+<h3>
+    Attachments
+</h3>
+
+
+<a asp-action="UploadAttachment"
+   asp-route-id="@Model.DocumentId"
+   class="btn btn-success mb-3">
+
+    Upload Attachment
+
+</a>
+
 
 
 @if(Model.Attachments != null && Model.Attachments.Any())
 {
+
+<table class="table table-bordered">
+
+<thead>
+
+<tr>
+
+<th>
+File Name
+</th>
+
+<th>
+Type
+</th>
+
+<th>
+Size
+</th>
+
+<th>
+Upload Date
+</th>
+
+<th>
+AI Status
+</th>
+
+<th>
+Action
+</th>
+
+</tr>
+
+</thead>
+
+
+
+<tbody>
+
+
+@foreach(var file in Model.Attachments)
+{
+
+<tr>
+
+<td>
+@file.FileName
+</td>
+
+
+<td>
+@file.FileExtension
+</td>
+
+
+<td>
+@file.FileSizeText
+</td>
+
+
+<td>
+@file.UploadDate
+</td>
+
+
+<td>
+@file.AIStatus
+</td>
+
+
+
+<td>
+
+
+<a href="@file.FilePath"
+   target="_blank"
+   class="btn btn-sm btn-primary">
+
+View
+
+</a>
+
+
+
+<a asp-action="DownloadAttachment"
+   asp-route-id="@file.AttachmentId"
+   class="btn btn-sm btn-info">
+
+Download
+
+</a>
+
+
+
+<form asp-action="DeleteAttachment"
+      asp-route-id="@file.AttachmentId"
+      method="post"
+      style="display:inline">
+
+
+<button type="submit"
+        class="btn btn-sm btn-danger"
+        onclick="return confirm('Delete file?')">
+
+Delete
+
+</button>
+
+
+</form>
+
+
+</td>
+
+
+</tr>
+
+}
+
+
+</tbody>
+
+</table>
+
+}
+else
+{
+
+<p>
+No attachment available
+</p>
+
+}
+
+
+<hr />
+
+<h3>Revision History</h3>
+
+
+@if(Model.Revisions != null && Model.Revisions.Any())
+{
     <table class="table table-bordered">
 
         <tr>
-            <th>File Name</th>
-            <th>Type</th>
-            <th>Upload Date</th>
-            <th>AI Status</th>
-            <th>Action</th>
+            <th>Revision</th>
+            <th>Status</th>
+            <th>Comment</th>
+            <th>Date</th>
+            <th>Prepared By</th>
+            <th>Checked By</th>
+            <th>Approved By</th>
         </tr>
 
 
-        @foreach(var file in Model.Attachments)
+        @foreach(var rev in Model.Revisions)
         {
             <tr>
 
-                <td>
-                    @file.FileName
-                </td>
+                <td>@rev.RevisionNo</td>
 
+                <td>@rev.Status</td>
 
-                <td>
-                    @file.FileExtension
-                </td>
+                <td>@rev.Comment</td>
 
+                <td>@rev.RevisionDate</td>
 
-                <td>
-                    @file.UploadDate
-                </td>
+                <td>@rev.PreparedBy</td>
 
+                <td>@rev.CheckedBy</td>
 
-                <td>
-                    @file.AIStatus
-                </td>
-
-
-                <td>
-                    <a href="@file.FilePath"
-                       class="btn btn-sm btn-primary">
-                        Open
-                    </a>
-                </td>
+                <td>@rev.ApprovedBy</td>
 
             </tr>
         }
@@ -54,7 +502,67 @@
 }
 else
 {
-    <p>
-        No attachment available
-    </p>
+    <p>No revision history available</p>
+}
+
+
+
+
+<hr />
+
+<h3>Workflow Status</h3>
+
+
+@if(Model.Workflows != null && Model.Workflows.Any())
+{
+    <table class="table table-bordered">
+
+        <tr>
+            <th>From</th>
+            <th>To</th>
+            <th>Comment</th>
+            <th>Date</th>
+            <th>Action By</th>
+        </tr>
+
+
+        @foreach(var item in Model.Workflows)
+        {
+            <tr>
+
+                <td>@item.FromStatus</td>
+
+                <td>@item.ToStatus</td>
+
+                <td>@item.Comment</td>
+
+                <td>@item.ActionDate</td>
+
+                <td>@item.ActionBy</td>
+
+            </tr>
+        }
+
+    </table>
+}
+else
+{
+    <p>No workflow history available</p>
+
+    <form asp-action="CreateRevision"
+      method="post">
+
+<input type="hidden"
+       name="id"
+       value="@Model.DocumentId" />
+
+
+<button class="btn btn-warning">
+
+Create New Revision
+
+</button>
+
+
+</form>
 }

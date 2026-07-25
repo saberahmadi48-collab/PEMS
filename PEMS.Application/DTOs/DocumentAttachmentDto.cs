@@ -4,21 +4,53 @@ public class DocumentAttachmentDto
 {
     public int AttachmentId { get; set; }
 
+
     public string FileName { get; set; } = "";
+
 
     public string FileExtension { get; set; } = "";
 
+
     public string FilePath { get; set; } = "";
+
 
     public long FileSize { get; set; }
 
+
+
+    public string FileSizeText
+    {
+        get
+        {
+            if (FileSize < 1024)
+                return $"{FileSize} Byte";
+
+
+            if (FileSize < 1024 * 1024)
+                return $"{FileSize / 1024:N2} KB";
+
+
+            return $"{FileSize / (1024 * 1024):N2} MB";
+        }
+    }
+
+
+
     public string? MimeType { get; set; }
+
+
 
     public string AIStatus { get; set; } = "";
 
+
+
     public string? AISummary { get; set; }
 
+
+
     public string? AIKeywords { get; set; }
+
+
 
     public DateTime UploadDate { get; set; }
 }

@@ -193,6 +193,25 @@ public class PEMSDbContext : DbContext
             .OnDelete(DeleteBehavior.Restrict);
 
 
+        // EngineeringDocument - Revision
+
+        modelBuilder.Entity<DocumentRevision>()
+            .HasOne(x => x.Document)
+            .WithMany(x => x.Revisions)
+            .HasForeignKey(x => x.DocumentId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+
+
+        // EngineeringDocument - Workflow
+
+        modelBuilder.Entity<DocumentWorkflow>()
+            .HasOne(x => x.Document)
+            .WithMany(x => x.Workflows)
+            .HasForeignKey(x => x.DocumentId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+
 
 
         // ==============================

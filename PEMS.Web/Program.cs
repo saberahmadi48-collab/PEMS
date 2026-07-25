@@ -1,24 +1,38 @@
 using Microsoft.EntityFrameworkCore;
+
 using PEMS.Application.Interfaces;
 using PEMS.Application.Services;
+
 using PEMS.Persistence.Context;
 using PEMS.Persistence.Repositories;
+using PEMS.Persistence.Services;
 
 using PEMS.Application.AI.Interfaces;
 using PEMS.Application.AI.Search.Interfaces;
 using PEMS.Application.AI.Search.Services;
 using PEMS.Application.AI.Services;
+
 using PEMS.AI.Interfaces;
 using PEMS.AI.Services;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 
+
+// =========================
 // MVC
+// =========================
+
 builder.Services.AddControllersWithViews();
 
 
+
+
+// =========================
 // Database
+// =========================
+
 builder.Services.AddDbContext<PEMSDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("PEMSConnection"),
@@ -29,50 +43,101 @@ builder.Services.AddDbContext<PEMSDbContext>(options =>
     ));
 
 
+
+
+
+// =========================
 // Application Services
-builder.Services.AddScoped<IEngineeringDocumentService, EngineeringDocumentService>();
+// =========================
+
+builder.Services.AddScoped<
+    IEngineeringDocumentService,
+    EngineeringDocumentService>();
 
 
+builder.Services.AddScoped<
+    IDocumentWorkflowService,
+    DocumentWorkflowService>();
+
+
+
+
+
+
+
+// =========================
 // Persistence Repositories
-builder.Services.AddScoped<IEngineeringDocumentRepository, EngineeringDocumentRepository>();
+// =========================
+
+builder.Services.AddScoped<
+    IEngineeringDocumentRepository,
+    EngineeringDocumentRepository>();
 
 
+
+
+
+
+
+// =========================
 // AI Services
+// =========================
+
 builder.Services.AddScoped<IDocumentAIService, DocumentAIService>();
+
 
 builder.Services.AddScoped<IDocumentSearchAIService, DocumentSearchAIService>();
 
 
+
 builder.Services.AddHttpClient<IOllamaService, OllamaService>(client =>
 {
-    client.BaseAddress = new Uri("http://localhost:11434/");
+    client.BaseAddress =
+        new Uri("http://localhost:11434/");
 });
+
+
+
+
+
 
 
 var app = builder.Build();
 
 
-// Configure HTTP request pipeline
+
+
+
+// =========================
+// HTTP Pipeline
+// =========================
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
+
     app.UseHsts();
 }
+
 
 
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 
+
 app.UseRouting();
 
+
 app.UseAuthorization();
+
 
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}"
 );
+
 
 
 app.Run();

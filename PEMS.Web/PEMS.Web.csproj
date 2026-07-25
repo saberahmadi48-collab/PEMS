@@ -30,6 +30,7 @@
     <Folder Include="wwwroot\uploads\dwg\" />
     <Folder Include="wwwroot\uploads\excel\" />
     <Folder Include="wwwroot\uploads\images\" />
+    <Folder Include="wwwroot\uploads\documents\" />
     <Folder Include="wwwroot\uploads\pdf\" />
   </ItemGroup>
 

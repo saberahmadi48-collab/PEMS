@@ -7,38 +7,60 @@ public class DocumentRevision
     [Key]
     public int RevisionId { get; set; }
 
-    // ارتباط با مدرک اصلی
+
     public int DocumentId { get; set; }
 
     public EngineeringDocument? Document { get; set; }
 
-    // شماره Revision
+
+
+    // Revision Number
     public string RevisionNo { get; set; } = "00";
 
-    // وضعیت Revision
-    // Draft, Review, Approved, Rejected
+
+    // Previous Revision
+    public string? PreviousRevisionNo { get; set; }
+
+
+
+    // Draft / Review / Approved / Rejected
     public string Status { get; set; } = "Draft";
 
-    // توضیحات تغییرات
+
+
+    public string? IssuePurpose { get; set; }
+
+
+
     public string? Comment { get; set; }
 
-    // تاریخ Revision
-    public DateTime RevisionDate { get; set; } = DateTime.Now;
 
-    // تهیه کننده
+
+    public DateTime RevisionDate { get; set; }
+        = DateTime.Now;
+
+
+
+    // Prepared By
     public int? PreparedById { get; set; }
 
     public Employee? PreparedBy { get; set; }
 
-    // بازبین
+
+
+    // Checked By
     public int? CheckedById { get; set; }
 
     public Employee? CheckedBy { get; set; }
 
-    // تایید کننده
+
+
+    // Approved By
     public int? ApprovedById { get; set; }
 
     public Employee? ApprovedBy { get; set; }
+
+
 
     public bool IsActive { get; set; } = true;
 }

@@ -34,23 +34,30 @@ public class EngineeringDocumentService : IEngineeringDocumentService
 
             DocumentType = x.DocumentType,
 
-            CreatedDate = x.CreatedDate,
+            ProjectId = x.ProjectId,
+
+            ProjectName = x.Project != null
+                ? x.Project.ProjectName
+                : "",
 
 
-            // Relations
+            DisciplineId = x.DisciplineId,
 
             DisciplineName = x.Discipline != null
                 ? x.Discipline.Name
                 : "",
 
 
-            ProjectName = x.Project != null
-                ? x.Project.ProjectName
-                : ""
+            Status = x.Status,
+
+            RevisionNo = x.RevisionNo,
+
+            CreatedDate = x.CreatedDate
 
 
         }).ToList();
     }
+
 
 
 
@@ -70,23 +77,25 @@ public class EngineeringDocumentService : IEngineeringDocumentService
             DocumentId = document.DocumentId,
 
 
-            DocumentNo = document.DocumentNo,
+            // Basic Information
 
+            DocumentNo = document.DocumentNo,
 
             Title = document.Title,
 
-
             Description = document.Description,
-
 
             DocumentType = document.DocumentType,
 
 
-            CreatedDate = document.CreatedDate,
+            ProjectId = document.ProjectId,
+
+            ProjectName = document.Project != null
+                ? document.Project.ProjectName
+                : "",
 
 
-
-            // Relations
+            DisciplineId = document.DisciplineId,
 
             DisciplineName = document.Discipline != null
                 ? document.Discipline.Name
@@ -94,16 +103,23 @@ public class EngineeringDocumentService : IEngineeringDocumentService
 
 
 
-            ProjectName = document.Project != null
-                ? document.Project.ProjectName
-                : "",
-
-
-
             Status = document.Status,
 
-
             RevisionNo = document.RevisionNo,
+
+            CreatedDate = document.CreatedDate,
+
+
+
+            // Engineering Information
+
+            IssuePurpose = document.IssuePurpose,
+
+            PreparedBy = document.PreparedBy,
+
+            CheckedBy = document.CheckedBy,
+
+            ApprovedBy = document.ApprovedBy,
 
 
 
@@ -137,9 +153,82 @@ public class EngineeringDocumentService : IEngineeringDocumentService
 
                 })
 
+                .ToList(),
+
+
+
+
+            // Revision History
+
+            Revisions = document.Revisions
+
+                .Where(x => x.IsActive)
+
+                .Select(x => new DocumentRevisionDto
+                {
+                    RevisionId = x.RevisionId,
+
+                    RevisionNo = x.RevisionNo,
+
+                    Status = x.Status,
+
+                    Comment = x.Comment,
+
+                    RevisionDate = x.RevisionDate,
+
+
+                    PreparedBy = x.PreparedBy != null
+                        ? x.PreparedBy.FirstName + " " + x.PreparedBy.LastName
+                        : "",
+
+
+                    CheckedBy = x.CheckedBy != null
+                        ? x.CheckedBy.FirstName + " " + x.CheckedBy.LastName
+                        : "",
+
+
+                    ApprovedBy = x.ApprovedBy != null
+                        ? x.ApprovedBy.FirstName + " " + x.ApprovedBy.LastName
+                        : ""
+
+                })
+
+                .ToList(),
+
+
+
+
+
+            // Workflow History
+
+            Workflows = document.Workflows
+
+                .Where(x => x.IsActive)
+
+                .Select(x => new DocumentWorkflowDto
+                {
+                    WorkflowId = x.WorkflowId,
+
+                    FromStatus = x.FromStatus,
+
+                    ToStatus = x.ToStatus,
+
+                    Comment = x.Comment,
+
+                    ActionDate = x.ActionDate,
+
+
+                    ActionBy = x.ActionBy != null
+                        ? x.ActionBy.FirstName + " " + x.ActionBy.LastName
+                        : ""
+
+                })
+
                 .ToList()
+
         };
     }
+
 
 
 
@@ -178,4 +267,5 @@ public class EngineeringDocumentService : IEngineeringDocumentService
     {
         await _repository.DeleteAsync(document);
     }
+
 }
